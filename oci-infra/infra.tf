@@ -25,14 +25,14 @@ module "vcn" {
 resource "oci_core_security_list" "private_subnet_sl" {
   compartment_id = var.compartment_id
   vcn_id         = module.vcn.vcn_id
-  display_name = "free-k8s-private-subnet-sl"
+  display_name   = "free-k8s-private-subnet-sl"
   egress_security_rules {
     stateless        = false
     destination      = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
     protocol         = "all"
   }
-  
+
   ingress_security_rules {
     stateless   = false
     source      = "10.0.0.0/16"
@@ -44,7 +44,7 @@ resource "oci_core_security_list" "private_subnet_sl" {
 resource "oci_core_security_list" "public_subnet_sl" {
   compartment_id = var.compartment_id
   vcn_id         = module.vcn.vcn_id
-  display_name = "free-k8s-public-subnet-sl"
+  display_name   = "free-k8s-public-subnet-sl"
   egress_security_rules {
     stateless        = false
     destination      = "0.0.0.0/0"
@@ -124,15 +124,17 @@ resource "oci_containerengine_node_pool" "k8s_node_pool" {
       availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
       subnet_id           = oci_core_subnet.vcn_private_subnet.id
     }
+    // how many nodes I want to provision in this node-pool
     size = 2
   }
   node_shape = "VM.Standard.A1.Flex"
   node_shape_config {
+    # RAM Memory
     memory_in_gbs = 6
     ocpus         = 1
   }
   node_source_details {
-    image_id    = "ocid1.image.oc1.ap-sydney-1.aaaaaaaaerfgnkrvzb2zzvgl74tgwduusospnh2wdse5l22j67zsk2tilkqa"
+    image_id    = "ocid1.image.oc1.ap-sydney-1.aaaaaaaaq2imz2yce564e5x32gfvycu3evgywf422nfllkb3thm2ufczstzq"
     source_type = "image"
   }
   initial_node_labels {
