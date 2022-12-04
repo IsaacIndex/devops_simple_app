@@ -25,6 +25,7 @@ jobs:
           install: true
       - name: 'Install OCI CLI'
         run: |
+          export OCI_CLI_SUPPRESS_FILE_PERMISSIONS_WARNING=True
           mkdir ~/.oci
           echo "${{ secrets.OCI_CONFIG }}" > ~/.oci/config
           echo "${{ secrets.OCI_KEY_FILE }}" > ~/.oci/key.pem
