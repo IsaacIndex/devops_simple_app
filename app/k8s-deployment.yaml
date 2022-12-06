@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
+          imagePullPolicy: Always
           image: syd.ocir.io/sd0tcfdx6rjx/free-kubernetes-nginx:latest
           ports:
             - containerPort: 80
